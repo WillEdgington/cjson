@@ -1,6 +1,6 @@
 # cjson - A simple JSON parser
 
-A JSON lexer and parser written in C from scratch, built as part of a self-directed C curriculum.
+A JSON lexer and parser written in C from scratch, built as part of a [self-directed C curriculum](https://github.com/WillEdgington/c-curriculum).
 
 Supports strings, numbers, booleans, null, nested objects, and arrays. Parses input into an AST and pretty-prints it back to JSON.
 
