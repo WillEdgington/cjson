@@ -16,6 +16,7 @@ typedef enum {
   JSON_FALSE,
   JSON_NULL,
   TOKEN_EOF,
+  TOKEN_ERROR,
 } TokenType;
 
 typedef union {
