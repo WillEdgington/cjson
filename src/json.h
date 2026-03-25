@@ -39,4 +39,7 @@ struct JsonNode {
   JsonValue value;
 };
 
+void json_free(JsonNode *jsonnode);
+void json_print(JsonNode *jsonnode);
+
 #endif

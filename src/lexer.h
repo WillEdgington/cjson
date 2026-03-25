@@ -33,4 +33,7 @@ typedef struct {
   size_t pos;
 } Lexer;
 
+void lexer_init(Lexer *lexer, const char *src);
+Token lexer_next_token(Lexer *lexer);
+
 #endif
