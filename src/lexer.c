@@ -64,7 +64,7 @@ static Token scan_keyword(Lexer *lexer) {
     return make_token(JSON_FALSE);
   } else if (strncmp(lexer->src + lexer->pos, "null", 4) == 0) {
     lexer->pos += 4;
-    return make_token(JSON_NULL);
+    return make_token(TOKEN_NULL);
   }
   return make_token(TOKEN_ERROR);
 }

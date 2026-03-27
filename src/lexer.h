@@ -14,7 +14,7 @@ typedef enum {
   NUMBER,
   JSON_TRUE,
   JSON_FALSE,
-  JSON_NULL,
+  TOKEN_NULL,
   TOKEN_EOF,
   TOKEN_ERROR,
 } TokenType;
