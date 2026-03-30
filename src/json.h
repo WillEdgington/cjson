@@ -39,6 +39,8 @@ struct JsonNode {
   JsonValue value;
 };
 
+#define INDENT 2
+
 void json_free(JsonNode *jsonnode);
 void json_print(JsonNode *jsonnode);
 
