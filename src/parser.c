@@ -122,12 +122,18 @@ static JsonPair *make_pair(Parser *parser) {
   next_token(parser);
 
   if (parser->token.type != COLON || parser->lookahead.type == TOKEN_ERROR) {
+    free(pair->key);
     free(pair);
     return NULL;
   }
   next_token(parser);
 
   pair->value = parse_value(parser);
+  if (pair->value == NULL) {
+    free(pair->key);
+    free(pair);
+    return NULL;
+  }
   return pair;
 }
 
@@ -140,6 +146,10 @@ static JsonNode *parse_object(Parser *parser) {
   size_t count = 0;
   size_t capacity = 4;
   JsonPair *pairs = malloc(capacity * sizeof(JsonPair));
+  if (pairs == NULL) {
+    free(node);
+    return NULL;
+  }
 
   while (parser->token.type == STRING) {
     if (count == capacity) {
@@ -153,7 +163,12 @@ static JsonNode *parse_object(Parser *parser) {
     }
     JsonPair *pair = make_pair(parser);
     if (pair == NULL) {
+      for (size_t j = 0; j < count; j++) {
+        free(pairs[j].key);
+        json_free(pairs[j].value);
+      }
       free(pairs);
+      json_free(node);
       return NULL;
     }
     pairs[count++] = *pair;
