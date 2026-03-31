@@ -1,0 +1,7 @@
+[
+  {
+    "this": [1, 4, 5, null, false, {"hello": "there"}],
+    "is": 100.453
+  },
+  ["a", "test", true]
+]

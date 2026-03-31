@@ -1,0 +1,69 @@
+{
+  "model": {
+    "model": "MatchPredictorV0",
+    "latentSize": 20,
+    "embDim": 1,
+    "encoderNumDownBlocks": 2,
+    "encoderAttnBlocksPerDown": 1,
+    "encoderNumAttnHeads": 2,
+    "encoderAttnDropout": 0.3,
+    "encoderResAttn": true,
+    "encoderConvBlocksPerDown": 1,
+    "encoderConvKernelSize": 3,
+    "encoderConvNorm": true,
+    "encoderConvActivation": "LeakyReLU",
+    "encoderResConv": true,
+    "featExtractorDepth": 2,
+    "featExtractorUseAttn": true,
+    "featExtractorResAttn": true,
+    "featExtractorAttnDropout": 0.3,
+    "featExtractorNumAttnHeads": 2,
+    "featExtractorUseFFN": true,
+    "featExtractorResFFN": true,
+    "featExtractorExpansionFFN": 4,
+    "featExtractorLnormFFN": true,
+    "featExtractorActivationFFN": "SiLU",
+    "activationMLP": "LeakyReLU"
+  },
+  "optimizer": {
+    "optimizer": "AdamW",
+    "lr": 0.0001,
+    "weight_decay": 0.0001
+  },
+  "data": {
+    "transform": {
+      "RandomTokenUNK": {
+        "prob": 0.7,
+        "intensity": 0.9
+      },
+      "TemporalDropout": {
+        "prob": 0.1,
+        "minKeep": 1
+      },
+      "MissingValueAugment": {
+        "prob": 0.1,
+        "intensity": 0.05
+      },
+      "ContinuousFeatureDropout": {
+        "prob": 0.1,
+        "intensity": 0.05
+      }
+    },
+    "batchSize": 64,
+    "seqLen": 20,
+    "groups": null
+  },
+  "lossFn": {
+    "lossFn": "CrossEntropyLoss",
+    "label_smoothing": 0.1
+  },
+  "train": {
+    "epochs": 20,
+    "savepoint": 10,
+    "calcAccuracy": true,
+    "enableAmp": true,
+    "gradClipping": 1.0
+  },
+  "device": "cpu",
+  "seed": 42
+}
