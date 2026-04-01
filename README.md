@@ -83,7 +83,9 @@ tests/
 
 ## Architecture
 
-The pipeline has three stages:
+The pipeline has four stages:
+
+**File reading:** `read_file` in `read.c` loads the input file into a heap-allocated null-terminated string using `fseek`/`ftell`/`fread`. The caller owns the buffer and frees it after parsing.
 
 **Lexer:** scans the raw input string character by character and produces tokens one at a time (`LBRACE`, `STRING`, `NUMBER`, `JSON_TRUE` etc.). The parser calls `lexer_next_token` to advance through the token stream.
 
