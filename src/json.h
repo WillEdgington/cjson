@@ -43,5 +43,6 @@ struct JsonNode {
 
 void json_free(JsonNode *jsonnode);
 void json_print(JsonNode *jsonnode);
+JsonNode *json_make_node(JsonType type);
 
 #endif

@@ -10,17 +10,8 @@ static Token next_token(Parser *parser) {
   return parser->token;
 }
 
-static JsonNode *make_node(JsonType type) {
-  JsonNode *node = malloc(sizeof(JsonNode));
-  if (node == NULL)
-    return NULL;
-  node->type = type;
-  node->value = (JsonValue){0};
-  return node;
-}
-
 static JsonNode *parse_string(Parser *parser) {
-  JsonNode *node = make_node(JSON_STRING);
+  JsonNode *node = json_make_node(JSON_STRING);
   if (node == NULL)
     return NULL;
   node->value.string = strdup(parser->token.value.string);
@@ -31,7 +22,7 @@ static JsonNode *parse_string(Parser *parser) {
 }
 
 static JsonNode *parse_number(Parser *parser) {
-  JsonNode *node = make_node(JSON_NUMBER);
+  JsonNode *node = json_make_node(JSON_NUMBER);
   if (node == NULL)
     return NULL;
   node->value.number = parser->token.value.number;
@@ -40,7 +31,7 @@ static JsonNode *parse_number(Parser *parser) {
 }
 
 static JsonNode *parse_bool(Parser *parser) {
-  JsonNode *node = make_node(JSON_BOOL);
+  JsonNode *node = json_make_node(JSON_BOOL);
   if (node == NULL)
     return NULL;
   node->value.boolean = parser->token.type == JSON_TRUE;
@@ -49,7 +40,7 @@ static JsonNode *parse_bool(Parser *parser) {
 }
 
 static JsonNode *parse_null(Parser *parser) {
-  JsonNode *node = make_node(JSON_NULL);
+  JsonNode *node = json_make_node(JSON_NULL);
   if (node == NULL)
     return NULL;
   next_token(parser);
@@ -57,7 +48,7 @@ static JsonNode *parse_null(Parser *parser) {
 }
 
 static JsonNode *parse_array(Parser *parser) {
-  JsonNode *node = make_node(JSON_ARRAY);
+  JsonNode *node = json_make_node(JSON_ARRAY);
   if (node == NULL)
     return NULL;
   next_token(parser);
@@ -138,7 +129,7 @@ static JsonPair *make_pair(Parser *parser) {
 }
 
 static JsonNode *parse_object(Parser *parser) {
-  JsonNode *node = make_node(JSON_OBJECT);
+  JsonNode *node = json_make_node(JSON_OBJECT);
   if (node == NULL)
     return NULL;
   next_token(parser);

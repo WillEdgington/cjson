@@ -114,3 +114,12 @@ void json_free(JsonNode *jsonnode) {
     break;
   }
 }
+
+JsonNode *json_make_node(JsonType type) {
+  JsonNode *node = malloc(sizeof(JsonNode));
+  if (node == NULL)
+    return NULL;
+  node->type = type;
+  node->value = (JsonValue){0};
+  return node;
+}
