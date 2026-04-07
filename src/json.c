@@ -1,6 +1,7 @@
 #include "json.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 static void print_value(JsonNode *node, int depth);
 
@@ -121,5 +122,40 @@ JsonNode *json_make_node(JsonType type) {
     return NULL;
   node->type = type;
   node->value = (JsonValue){0};
+  return node;
+}
+
+JsonNode *json_make_string(const char *str) {
+  JsonNode *node = json_make_node(JSON_STRING);
+  node->value.string = strdup(str);
+  return node;
+}
+JsonNode *json_make_number(double num) {
+  JsonNode *node = json_make_node(JSON_NUMBER);
+  node->value.number = num;
+  return node;
+}
+JsonNode *json_make_bool(bool boolean) {
+  JsonNode *node = json_make_node(JSON_BOOL);
+  node->value.boolean = boolean;
+  return node;
+}
+
+JsonNode *json_make_null(void) {
+  JsonNode *node = json_make_node(JSON_NULL);
+  return node;
+}
+
+JsonNode *json_make_array(void) {
+  JsonNode *node = json_make_node(JSON_ARRAY);
+  node->value.array.count = 0;
+  node->value.array.items = NULL;
+  return node;
+}
+
+JsonNode *json_make_object(void) {
+  JsonNode *node = json_make_node(JSON_OBJECT);
+  node->value.object.count = 0;
+  node->value.object.pairs = NULL;
   return node;
 }
