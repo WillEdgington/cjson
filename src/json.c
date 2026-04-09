@@ -127,27 +127,37 @@ JsonNode *json_make_node(JsonType type) {
 
 JsonNode *json_make_string(const char *str) {
   JsonNode *node = json_make_node(JSON_STRING);
+  if (node == NULL)
+    return NULL;
   node->value.string = strdup(str);
   return node;
 }
 JsonNode *json_make_number(double num) {
   JsonNode *node = json_make_node(JSON_NUMBER);
+  if (node == NULL)
+    return NULL;
   node->value.number = num;
   return node;
 }
 JsonNode *json_make_bool(bool boolean) {
   JsonNode *node = json_make_node(JSON_BOOL);
+  if (node == NULL)
+    return NULL;
   node->value.boolean = boolean;
   return node;
 }
 
 JsonNode *json_make_null(void) {
   JsonNode *node = json_make_node(JSON_NULL);
+  if (node == NULL)
+    return NULL;
   return node;
 }
 
 JsonNode *json_make_array(void) {
   JsonNode *node = json_make_node(JSON_ARRAY);
+  if (node == NULL)
+    return NULL;
   node->value.array.count = 0;
   node->value.array.items = NULL;
   return node;
@@ -155,6 +165,8 @@ JsonNode *json_make_array(void) {
 
 JsonNode *json_make_object(void) {
   JsonNode *node = json_make_node(JSON_OBJECT);
+  if (node == NULL)
+    return NULL;
   node->value.object.count = 0;
   node->value.object.pairs = NULL;
   return node;
