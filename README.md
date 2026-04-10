@@ -140,6 +140,45 @@ The pipeline has four stages, with an optional query step:
 
 ---
 
+## API
+
+### Constructors
+| Function | Description |
+|----------|-------------|
+| `json_make_string(str)` | Creates a JSON string node |
+| `json_make_number(num)` | Creates a JSON number node |
+| `json_make_bool(boolean)` | Creates a JSON boolean node |
+| `json_make_null()` | Creates a JSON null node |
+| `json_make_array()` | Creates an empty JSON array node |
+| `json_make_object()` | Creates an empty JSON object node |
+
+### Query
+| Function | Description |
+|----------|-------------|
+| `json_get_key(node, key)` | Returns the value for a key in an object |
+| `json_get_index(node, i)` | Returns the element at index i in an array |
+| `json_get_path(node, path)` | Dot-separated traversal across nested objects and arrays |
+| `json_has_key(node, key)` | Returns true if key exists in an object |
+
+### Mutation
+| Function | Description |
+|----------|-------------|
+| `json_set_key(object, key, value)` | Sets or overwrites a key in an object |
+| `json_set_index(array, i, value)` | Overwrites the element at index i |
+| `json_append(array, item)` | Appends an item to an array |
+| `json_remove_key(object, key)` | Removes and returns the value for a key |
+| `json_remove_index(array, i)` | Removes and returns the element at index i |
+| `json_pop(array)` | Removes and returns the last element |
+| `json_popleft(array)` | Removes and returns the first element |
+
+### Memory
+| Function | Description |
+|----------|-------------|
+| `json_free(node)` | Recursively frees a JsonNode tree |
+| `json_print(node)` | Pretty-prints a JsonNode tree to stdout |
+
+---
+
 ## Error handling
 
 If the input is malformed, the parser returns `NULL`, all partially allocated nodes are freed, and the program exits with a parse error message. Memory correctness is verified with AddressSanitizer and Valgrind.
