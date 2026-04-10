@@ -185,6 +185,22 @@ If the input is malformed, the parser returns `NULL`, all partially allocated no
 
 ---
 
+## Limitations
+
+**Object key lookup is O(N):** `JSON_OBJECT` is backed by a flat array of key-value pairs rather than a hash map. Key lookup, insertion, and removal all scan the array linearly. A production JSON library would use a hash map for ~O(1) average-case access, but that is outside the scope of this project.
+
+**Array insertion and removal are O(N):** `JSON_ARRAY` is a flat array of pointers. Inserting or removing at an arbitrary index requires shifting all subsequent elements. `json_popleft` in particular is O(N) for this reason. A doubly linked list or deque would give O(1) operations at both ends, at the cost of cache locality.
+
+**No geometric growth on mutation:** `json_append` grows the array by exactly one element per call via `realloc`. Repeated appends are O(N²) in total. The parser uses geometric growth internally during construction, but capacity is not stored in the node after parsing, so the mutation API cannot carry that strategy forward without a change to the `JsonNode` struct.
+
+**No Unicode escape handling:** string parsing accepts raw UTF-8 but does not process `\uXXXX` escape sequences. A JSON file containing `"\u0041"` will store the literal six characters rather than `A`.
+
+**No duplicate key detection:** if a JSON object contains duplicate keys the parser will store all of them. `json_get_key` returns the first match. `json_set_key` removes the first match before inserting, leaving any subsequent duplicates intact.
+
+**Numbers are stored as `double`:** all numeric values are parsed with `strtod` and stored as `double`. Large integers beyond 2^53 will lose precision.
+
+---
+
 ## Author
 
 Created by [**WillEdgington**](https://github.com/WillEdgington)
